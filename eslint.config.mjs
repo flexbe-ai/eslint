@@ -1,68 +1,29 @@
-import antfu from '@antfu/eslint-config';
+import {
+  combine,
+  comments,
+  ignores as ignoresFactory,
+  imports,
+  javascript,
+  jsdoc,
+  jsonc,
+  markdown,
+  node,
+  sortPackageJson,
+  sortTsconfig,
+  stylistic,
+  toml,
+  typescript,
+  unicorn,
+  yaml,
+  jsx,
+  solid,
+  react,
+  formatters
+} from '@antfu/eslint-config';
 
-export default antfu({
-  // Type of the project. `lib` will enable more strict rules for libraries.
-  type: 'app',
-
-  // Disable some opinionated rules
-  lessOpinionated: true,
-
-  // Enable formatters support for CSS, HTML, SVG, MD etc.
-  formatters: true,
-
-  // Enable TypeScript support
-  typescript: {
-    tsconfigPath: './tsconfig.json',
-  },
-  // Enable JSX related rules
-  jsx: true,
-
-  // Enable linting for **code snippets** in Markdown.
-  markdown: true,
-
-  // Disable linting for JSON files
-  json: false,
-
-  // Customize the stylistic rules
-  // https://eslint.style/packages/default#rules
-  stylistic: {
-    indent: 4, // Changed to 4 spaces as per old config
-    quotes: 'single',
-    semi: true,
-    braceStyle: 'stroustrup',
-    blockSpacing: true,
-    quoteProps: 'as-needed',
-    commaDangle: {
-      arrays: 'always-multiline',
-      objects: 'always-multiline',
-      imports: 'only-multiline',
-      exports: 'only-multiline',
-      functions: 'never',
-    },
-    objectCurlySpacing: 'always',
-    keywordSpacing: { before: true, after: true },
-    spaceInfixOps: true,
-    memberDelimiterStyle: {
-      multiline: {
-        delimiter: 'semi',
-        requireLast: true,
-      },
-      singleline: {
-        delimiter: 'semi',
-        requireLast: false,
-      },
-    },
-    jsxCurlySpacing: {
-      when: 'always',
-      children: 1,
-      attributes: 1,
-      allowMultiline: true,
-    },
-  },
-
-  // Customize rules
-  // https://eslint.org/docs/latest/rules
-  rules: {
+// Customize rules
+// https://eslint.org/docs/latest/rules
+export const baseRules = {
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'no-debugger': 'warn',
     'no-duplicate-imports': 'off',
@@ -78,6 +39,36 @@ export default antfu({
     'style/no-trailing-spaces': ['warn', { 'ignoreComments': true }],
     'style/space-before-function-paren': ['error', 'never'],
     'style/template-curly-spacing': ['error', 'always'],
+    'style/indent': ['error', 4],
+    'style/quotes': ['error', 'single'],
+    'style/semi': ['error', 'always'],
+    'style/brace-style': ['error', 'stroustrup'],
+    'style/block-spacing': ['error', 'always'],
+    'style/quote-props': ['error', 'as-needed'],
+    'style/comma-dangle': ['error', {
+      arrays: 'always-multiline',
+      objects: 'always-multiline',
+      imports: 'only-multiline',
+      exports: 'only-multiline',
+      functions: 'never',
+    }],
+    'style/object-curly-spacing': ['error', 'always'],
+    'style/keyword-spacing': ['error', { before: true, after: true }],
+    'style/space-infix-ops': ['error'],
+    'style/member-delimiter-style': ['error', {
+      multiline: {
+        delimiter: 'semi',
+        requireLast: true,
+      },
+      singleline: {
+        delimiter: 'semi',
+        requireLast: false,
+      },
+    }],
+    'style/jsx-curly-spacing': [1, {
+      when: 'always',
+      allowMultiline: true,
+    }],
 
     // TypeScript specific rules
     'ts/no-this-alias': 'off',
@@ -215,18 +206,23 @@ export default antfu({
     'import/no-relative-packages': 'error',
     'import/no-mutable-exports': 'error',
     'import/no-self-import': 'error',
+};
 
-    // Solid specific rules
-    'solid/reactivity': 'warn',
-    'solid/no-destructure': 'warn',
-    'solid/jsx-no-undef': 'error',
-    'solid/prefer-show': 'off',
-    'solid/prefer-classlist': 'off',
-    'solid/no-innerhtml': 'off',
-  },
+// Solid-specific rules that will only be applied if the plugin is available
+export const solidRules = {
+  'solid/reactivity': 'warn',
+  'solid/no-destructure': 'warn',
+  'solid/jsx-no-undef': 'error',
+  'solid/prefer-show': 'off',
+  'solid/prefer-classlist': 'off',
+  'solid/no-innerhtml': 'off',
+};
 
-  // Ignore files
-  ignores: [
+export const reactRules = {
+  
+};
+
+export const ignores = ignoresFactory([
     '**/fixtures',
     '**/node_modules',
     '**/dist',
@@ -234,5 +230,50 @@ export default antfu({
     '**/coverage',
     '**/public',
     '**/*.min.[tj]s',
-  ],
-}); 
+  ]);
+
+// Base configuration that can be extended
+export const baseConfig = combine(
+  ignores,
+  formatters(true),
+  javascript({
+    files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
+  }),
+  typescript({
+    tsconfigPath: './tsconfig.json',
+  }),
+  stylistic({
+    lessOpinionated: true,
+  }),
+  jsx(),
+  node(),
+  imports(),
+  comments(),
+  jsonc(),
+  jsdoc(),
+  markdown(),
+  {
+    rules: baseRules,
+  },
+);
+
+// Solid-specific rules that will only be applied if the plugin is available
+export const solidConfig = combine(
+  baseConfig,
+  solid({
+    files: ['**/*.tsx'],
+    overrides: solidRules
+  }),
+)
+
+// React-specific configuration
+export const reactConfig = combine(
+  baseConfig,
+  react({
+    files: ['**/*.tsx'],
+    overrides: reactRules
+  }),
+)
+
+// Default export is the base config
+export default baseConfig;
