@@ -5,8 +5,7 @@
   "main": "eslint.config.mjs",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\"",
-    "publish": "npm publish"
+    "test": "echo \"Error: no test specified\""
   },
   "repository": {
     "type": "git",
