@@ -1,43 +1,43 @@
 {
-  "name": "@flexbe/eslint-config",
-  "version": "1.0.7",
-  "description": "Common ESLint config for Flexbe projects",
-  "main": "eslint.config.mjs",
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\"",
-    "version-bump": "npm version patch --no-git-tag-version && git add package.json && git commit -m \"chore: bump version\"",
-    "prepublishOnly": "npm run version-bump"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/flexbe-ai/eslint.git"
-  },
-  "keywords": [
-    "ESLint",
-    "Flexbe"
-  ],
-  "author": "Maksim Kachurin",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/flexbe-ai/eslint/issues"
-  },
-  "homepage": "https://github.com/flexbe-ai/eslint#readme",
-  "dependencies": {
-    "@antfu/eslint-config": "^4.13.0",
-    "@eslint-react/eslint-plugin": "^1.49.0",
-    "eslint": "^9.26.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
-    "eslint-plugin-solid": "^0.14.5",
-    "eslint-plugin-format": "^1.0.1",
-    "typescript": "^5.8.3"
-  },
-  "peerDependencies": {
-    "eslint": "^9.26.0",
-    "typescript": "^5.8.3"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+    "name": "@flexbe/eslint-config",
+    "version": "1.0.7",
+    "description": "Common ESLint config for Flexbe projects",
+    "main": "eslint.config.mjs",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\"",
+        "version-bump": "npm version patch --no-git-tag-version && git add package.json && git commit -m \"chore: bump version\"",
+        "prepublishOnly": "npm run version-bump"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/flexbe-ai/eslint.git"
+    },
+    "keywords": [
+        "ESLint",
+        "Flexbe"
+    ],
+    "author": "Maksim Kachurin",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/flexbe-ai/eslint/issues"
+    },
+    "homepage": "https://github.com/flexbe-ai/eslint#readme",
+    "dependencies": {
+        "@antfu/eslint-config": "^4.13.0",
+        "@eslint-react/eslint-plugin": "^1.49.0",
+        "eslint": "^9.26.0",
+        "eslint-plugin-react-hooks": "^5.2.0",
+        "eslint-plugin-react-refresh": "^0.4.20",
+        "eslint-plugin-solid": "^0.14.5",
+        "eslint-plugin-format": "^1.0.1",
+        "typescript": "^5.8.3"
+    },
+    "peerDependencies": {
+        "eslint": "^9.26.0",
+        "typescript": "^5.8.3"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
 }

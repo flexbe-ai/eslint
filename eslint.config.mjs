@@ -62,6 +62,49 @@ const baseRules = {
         when: 'always',
         allowMultiline: true,
     }],
+    // https://eslint.style/rules/js/padding-line-between-statements
+    'style/padding-line-between-statements': [
+        'error',
+        // Imports
+        { blankLine: 'always', prev: 'import', next: '*' },
+        { blankLine: 'any', prev: 'import', next: 'import' },
+        // Exports
+        { blankLine: 'always', prev: '*', next: 'export' },
+        { blankLine: 'any', prev: 'export', next: 'export' },
+        // Variable declarations
+        { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
+        { blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var'] },
+        // After blocks and block-like
+        { blankLine: 'always', prev: 'block-like', next: '*' },
+        { blankLine: 'any', prev: 'block-like', next: 'block-like' },
+        // Before return/throw/break/continue
+        { blankLine: 'always', prev: '*', next: ['return', 'throw', 'break', 'continue'] },
+        // After directives
+        { blankLine: 'always', prev: 'directive', next: '*' },
+        { blankLine: 'any', prev: 'directive', next: 'directive' },
+        // Between switch cases
+        { blankLine: 'always', prev: ['case', 'default'], next: '*' },
+        { blankLine: 'any', prev: ['case', 'default'], next: ['case'] },
+        { blankLine: 'never', prev: '*', next: 'break' },
+        // After class declarations
+        { blankLine: 'always', prev: 'class', next: '*' },
+        // After function declarations
+        { blankLine: 'always', prev: 'function', next: '*' },
+    ],
+    'style/jsx-indent-props': [2, 'first'],
+    'style/no-mixed-operators': [
+        'error',
+        {
+            groups: [
+                ['+', '-', '*', '/', '%', '**'],
+                ['&', '|', '^', '~', '<<', '>>', '>>>'],
+                ['==', '!=', '===', '!==', '>', '>=', '<', '<='],
+                ['&&', '||', '?:'],
+                ['in', 'instanceof'],
+            ],
+            allowSamePrecedence: true,
+        },
+    ],
 
     // Import rules
     'perfectionist/sort-imports': 'off',
@@ -239,10 +282,28 @@ const baseConfig = (...configs) => combine(
     jsx(),
     imports(),
     comments(),
-    jsonc(),
+    jsonc({
+        overrides: {
+            'jsonc/indent': ['error', 4],
+        },
+    }),
     jsdoc(),
     {
         rules: baseRules,
+    },
+    {
+        files: ['**/*.less', '**/*.css'],
+        rules: {
+            'format/prettier': [
+                'error',
+                {
+                    tabWidth: 4,
+                    semi: true,
+                    singleQuote: true,
+                    printWidth: 250,
+                },
+            ],
+        },
     },
     ...configs
 );
