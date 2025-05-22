@@ -1,6 +1,6 @@
 {
     "name": "@flexbe/eslint-config",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "Common ESLint config for Flexbe projects",
     "main": "eslint.config.mjs",
     "type": "module",
