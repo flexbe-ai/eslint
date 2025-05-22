@@ -282,14 +282,16 @@ const baseConfig = (...configs) => combine(
     jsx(),
     imports(),
     comments(),
-    jsonc({
-        overrides: {
-            'jsonc/indent': ['error', 4],
-        },
-    }),
+    jsonc(),
     jsdoc(),
     {
         rules: baseRules,
+    },
+    {
+        files: ['**/*.json', '**/*.json5'],
+        rules: {
+            'jsonc/indent': ['error', 4],
+        },
     },
     {
         files: ['**/*.less', '**/*.css'],
